@@ -30,6 +30,7 @@ namespace WebAPI
                     builder.AddResource<Listing>("listings");
                     builder.AddResource<Agent>("agents");
                     builder.AddResource<Office>("offices");
+                    builder.AddResource<Location>("locations");
                 });
             }, mvcBuilder);
 

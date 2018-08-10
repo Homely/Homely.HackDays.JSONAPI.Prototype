@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using WebAPI.Models;
 
 namespace WebAPI.Repositories
@@ -39,7 +38,17 @@ namespace WebAPI.Repositories
                 Id = 1,
                 Title = "Awesome 2 bedder close to schools",
                 Price = "$150,000",
-                Agents = Agents.Take(2).ToList()
+                Agents = Agents.Take(2).ToList(),
+                PropertyType = "House",
+                Address = "10 Coventry St",
+                Location = Locations.First(),
+                Images = new[]
+                {
+                    "https://res-2.cloudinary.com/hd1n2hd4y/image/upload/l-Propertybase-2898169-1.jpg",
+                    "https://res-2.cloudinary.com/hd1n2hd4y/image/upload/l-Propertybase-2898169-2.jpg",
+                    "https://res-2.cloudinary.com/hd1n2hd4y/image/upload/l-Propertybase-2898169-3.jpg",
+                    "https://res-2.cloudinary.com/hd1n2hd4y/image/upload/l-Propertybase-2898169-4.jpg"
+                }
             },
             new Listing
             {
@@ -49,13 +58,19 @@ namespace WebAPI.Repositories
                 Agents = new[]
                 {
                     Agents.Last()
-                }
+                },
+                PropertyType = "House",
+                Address = "1 Queensbridge St",
+                Location = Locations.First()
             },
             new Listing
             {
                 Id = 3,
                 Title = "Dream apartment",
-                Price = "$270,000"
+                Price = "$270,000",
+                PropertyType = "Apartment",
+                Address = "10 Bridge Rd",
+                Location = Locations.Last()
             }
         };
 
@@ -72,6 +87,24 @@ namespace WebAPI.Repositories
                 Id = 2,
                 Name = "LJ Hooker St Kilda",
                 Address = "43 Acland St"
+            }
+        };
+
+        private static IEnumerable<Location> Locations => new[]
+        {
+            new Location
+            {
+                Id = 1,
+                Name = "Southbank",
+                State = "Victoria",
+                LatLong = "180.34,-90.23"
+            },
+            new Location
+            {
+                Id = 2,
+                Name = "Richmond",
+                State = "Victoria",
+                LatLong = "180.34,-90.23"
             }
         };
 
