@@ -1,19 +1,20 @@
 # Homely.HackDays.JSONAPI.Prototype
 
 ## Goals
-Get all listings
+1. Get all listings
 https://localhost:44380/api/v1/listings
 
-Get single listing
+2. Get single listing
 https://localhost:44380/api/v1/listings/1
 
-Get single listing (limit fields)
+3. Get single listing (limit fields)
 https://localhost:44380/api/v1/listings?fields[listings]=title
 
+4. Get single listing and include agents
+https://localhost:44380/api/v1/listings/1?include=agents
 
-Get listing & agents & office
-https://localhost:44380/api/v1/listing/1?include=agents.office
+5. Get single listing and include agents, and the agents office
+FAIL: not supported by this library (yet). https://github.com/json-api-dotnet/JsonApiDotNetCore/issues/39
 
-
-Consumption:
-- can we create a simple JS app? MVC app? 
+Cons:
+- No deep nested support. Coming soon.

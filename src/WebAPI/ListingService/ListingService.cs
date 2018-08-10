@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using JsonApiDotNetCore.Internal;
 using JsonApiDotNetCore.Models;
 using JsonApiDotNetCore.Services;
 using Microsoft.Extensions.Logging;
 using WebAPI.Models;
+using WebAPI.Repositories;
 
 namespace WebAPI
 {
@@ -13,62 +13,15 @@ namespace WebAPI
     {
         private readonly IJsonApiContext _jsonApiContext;
         private readonly ILogger _logger;
+        private readonly FakeListingRepository _repository;
 
         public ListingService(IJsonApiContext jsonApiContext,
                 ILoggerFactory loggerFactory)
         {
             _jsonApiContext = jsonApiContext;
             _logger = loggerFactory.CreateLogger<ListingService>();
+            _repository = new FakeListingRepository();
         }
-
-        private static IEnumerable<Agent> Agents => new[]
-        {
-            new Agent
-            {
-                Id = 1,
-                Name = "Bob Cobb",
-                Email = "bob@cobb.com"
-            },
-            new Agent
-            {
-                Id = 2,
-                Name = "Art Vandelay",
-                Email = "art@vandelay.com"
-            },
-            new Agent
-            {
-                Id = 3,
-                Name = "Todd Gack",
-                Email = "todd@gack.com"
-            }
-        };
-
-        private static IEnumerable<Listing> Listings => new[]
-        {
-            new Listing
-            {
-                Id = 1,
-                Title = "Awesome 2 bedder close to schools",
-                Price = "$150,000",
-                Agents = Agents.Take(2).ToList()
-            },
-            new Listing
-            {
-                Id = 2,
-                Title = "Beachfront mansion",
-                Price = "$1,000,000",
-                Agents = new[]
-                {
-                    Agents.Last()
-                }
-            },
-            new Listing
-            {
-                Id = 3,
-                Title = "Dream apartment",
-                Price = "$270,000"
-            }
-        };
 
         public Task<Listing> CreateAsync(Listing entity)
         {
@@ -82,12 +35,12 @@ namespace WebAPI
 
         public Task<IEnumerable<Listing>> GetAsync()
         {
-            return Task.FromResult(Listings);
+            return Task.FromResult(_repository.Get());
         }
 
         public Task<Listing> GetAsync(int id)
         {
-            return Task.FromResult(Listings.SingleOrDefault(listing => listing.Id == id));
+            return Task.FromResult(_repository.Get(id));
         }
 
         public async Task<object> GetRelationshipAsync(int id, string relationshipName)
@@ -96,9 +49,8 @@ namespace WebAPI
             
             if (listing == null)
             {
-                throw new JsonApiException(404, $"Relationship '{relationshipName}' not found.");
+                throw new JsonApiException(404, $"ListingId: '{id}' not found.");
             }
-           
 
             // compound-property -> CompoundProperty
             var navigationPropertyName = _jsonApiContext.ContextGraph.GetRelationshipName<Listing>(relationshipName);

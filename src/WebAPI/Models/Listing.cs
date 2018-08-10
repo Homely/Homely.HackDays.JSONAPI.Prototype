@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace WebAPI.Models
 {
-    public class Listing : Identifiable<int>
+    public class Listing : Identifiable
     {
         [Attr("title")]
         public string Title { get; set; }
@@ -12,6 +12,6 @@ namespace WebAPI.Models
         public string Price { get; set; }
 
         [HasMany("agents")]
-        public virtual ICollection<Agent> Agents { get; set; }
+        public IEnumerable<Agent> Agents { get; set; }
     }
 }

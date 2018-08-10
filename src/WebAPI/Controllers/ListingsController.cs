@@ -8,8 +8,8 @@ namespace WebAPI.Controllers
     public class ListingsController : JsonApiController<Listing>
     {
         public ListingsController(IJsonApiContext jsonApiContext,
-                                 IResourceService<Listing> resourceService,
-                                 ILoggerFactory loggerFactory) 
+                                  IResourceService<Listing> resourceService,
+                                  ILoggerFactory loggerFactory)
             : base(jsonApiContext, resourceService, loggerFactory)
         {
         }

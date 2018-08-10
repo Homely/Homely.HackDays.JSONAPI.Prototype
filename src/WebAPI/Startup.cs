@@ -29,6 +29,7 @@ namespace WebAPI
                 options.BuildContextGraph((builder) => {
                     builder.AddResource<Listing>("listings");
                     builder.AddResource<Agent>("agents");
+                    builder.AddResource<Office>("offices");
                 });
             }, mvcBuilder);
 
