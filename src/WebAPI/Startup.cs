@@ -28,6 +28,7 @@ namespace WebAPI
                 options.Namespace = "api/v1";
                 options.BuildContextGraph((builder) => {
                     builder.AddResource<Listing>("listings");
+                    builder.AddResource<Agent>("agents");
                 });
             }, mvcBuilder);
 
